@@ -184,7 +184,8 @@ describe('cache-storage', () => {
             const cache = createMockContext('http://example.com', {useCORS: true});
             await cache.addImage('http://html2canvas.hertzen.com/test.jpg');
             deepStrictEqual(images.length, 1);
-            deepStrictEqual(images[0].src, 'http://html2canvas.hertzen.com/test.jpg');
+            const sp = new URL(images[0].src || '').searchParams.toString();
+            deepStrictEqual(images[0].src, 'http://html2canvas.hertzen.com/test.jpg' + (sp.length ? '?' + sp : ''));
             deepStrictEqual(images[0].crossOrigin, 'anonymous');
         });
 
@@ -203,7 +204,8 @@ describe('cache-storage', () => {
             const cache = createMockContext('http://example.com', {useCORS: true});
             await cache.addImage('http://html2canvas.hertzen.com/test.jpg');
             deepStrictEqual(images.length, 1);
-            deepStrictEqual(images[0].src, 'http://html2canvas.hertzen.com/test.jpg');
+            const sp = new URL(images[0].src || '').searchParams.toString();
+            deepStrictEqual(images[0].src, 'http://html2canvas.hertzen.com/test.jpg' + (sp.length ? '?' + sp : ''));
             deepStrictEqual(images[0].crossOrigin, 'anonymous');
         });
 
