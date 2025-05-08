@@ -96,6 +96,10 @@ export class Cache {
             //ios safari 10.3 taints canvas with data urls unless crossOrigin is set to anonymous
             if (isInlineBase64Image(src) || useCORS) {
                 img.crossOrigin = 'anonymous';
+                // Force the browser to fetch the resource with crossorigin='anonymous'
+                // This avoids the browser from fetching the image from one of its internal caches,
+                // as that cached image may not have been fetched with CORS (and will result in failure)
+                img.src = `${src}?v=${Date.now()}`;
             }
             img.src = src;
             if (img.complete === true) {
